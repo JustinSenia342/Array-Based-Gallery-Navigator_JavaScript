@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!--Justin Senia-->
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>COSC 231 WI 2016 PP#2: Image Viewer </title>
+
+<style>
+
+	textarea{
+		resize: none;
+	}
+
+	button{
+		width: 62px;
+		height: 100px;
+		}
+	
+	button img{
+		width: 62px;
+		height: 100px;
+		position: relative;
+		left: -9px;
+		top: -2px;
+	}
+
+	#container{
+		position: relative;
+		width: 375px;
+		height: 425px;
+		margin-left: auto;
+		margin-right: auto;
+		background-color: lightgrey;
+		border-style: solid;
+		border-color: black;
+	}
+
+	#MainPicDiv{
+		Position: relative;
+		width: 200px;
+		height: 200px;
+		margin-left: auto;
+		margin-right: auto;
+		border-style: solid;
+		border-color: black;
+		background-color: black;
+		top: 30px;
+	}
+	#Back{
+		Position: relative;
+		width: 62px;
+		height: 100px;
+		left: -73px;
+		border-style: solid;
+		border-color: black;
+		top: -150px;
+	}
+	#Forward{
+		Position: relative;
+		width: 62px;
+		height: 100px;
+		left: 205px;
+		border-style: solid;
+		border-color: black;
+		top: -254px;
+	}
+	#MainTitle{
+		Position: relative;
+		width: 343px;
+		height: 25px;
+		margin-left: auto;
+		margin-right: auto;
+		border-style: solid;
+		border-color: black;
+		top: 40px;
+	}
+	#MainDescription{
+		Position: relative;
+		width: 343px;
+		height: 50px;
+		margin-left: auto;
+		margin-right: auto;
+		border-style: solid;
+		border-color: black;
+		top: 50px;
+	}
+	#NavBar{
+		Position: relative;
+		width: 343px;
+		height: 49px;
+		margin-left: auto;
+		margin-right: auto;
+		border-style: solid;
+		border-color: black;
+		border-width: 2px;
+		top: 55px;
+	}
+	#God{
+		position: relative;
+		width: 45px;
+		height: 45px;
+		border-style: solid;
+		border-color: black;
+		border-size: 1px;
+		top: -1px;
+		left: -1px;
+	}
+	#Angels{
+		position: relative;
+		width: 45px;
+		height: 45px;
+		border-style: solid;
+		border-color: black;
+		top: -52px;
+		left: 48px;
+	}
+	#Demons{
+		position: relative;
+		width: 45px;
+		height: 45px;
+		border-style: solid;
+		border-color: black;
+		top: -103px;
+		left: 97px;
+	}
+	#Stars{
+		position: relative;
+		width: 45px;
+		height: 45px;
+		border-style: solid;
+		border-color: black;
+		top: -154px;
+		left: 146px;
+	}
+	#Moon{
+		position: relative;
+		width: 45px;
+		height: 45px;
+		border-style: solid;
+		border-color: black;
+		top: -205px;
+		left: 195px;
+	}
+	#Kings{
+		position: relative;
+		width: 45px;
+		height: 45px;
+		border-style: solid;
+		border-color: black;
+		top: -256px;
+		left: 244px;
+	}
+	#Princes{
+		position: relative;
+		width: 45px;
+		height: 45px;
+		border-style: solid;
+		border-color: black;
+		top: -307px;
+		left: 293px;
+	}
+
+
+</style>
+<script>
+
+	var arrayCount = 0;
+	
+	//img URL array
+	var imageURL = [
+		"http://farm2.staticflickr.com/1427/584157862_e67cac8eea.jpg",
+		"http://www.flossiesgifts.com/v/vspfiles/photos/DMD-STK644741-doctor-who-12.jpg",
+		"https://s-media-cache-ak0.pinimg.com/236x/7d/1b/f6/7d1bf6f0b83823fdc0487b32021353a7.jpg",
+		"http://static.parade.com/wp-content/uploads/2014/03/Why-Do-Stars-All-Look-Almost-the-Same-Size-ftr.jpg",
+		"http://www.elcinedeloqueyotediga.net/wp-content/uploads/2009/07/ElcineenlasestrellasLunaViajealaLuna1.png",
+		"http://static.tvtropes.org/pmwiki/pub/images/King-Arthur-and-Patsy-monty-python-380178_800_441_4926.jpg",
+		"https://i.pinimg.com/originals/6b/ce/34/6bce346f9fdc983e9887bbb27099bc67.jpg"
+	];
+	
+	//img ALT array
+	var imageAlt = [
+		"Picture of god",
+		"Picture of angels",
+		"Picture of demons",
+		"Picture of stars",
+		"Picture of the moon",
+		"Picture of Kings",
+		"Picture of Princes"
+	];
+	
+	//Title Array
+	var imageTitle = [
+		"God",
+		"Angels",
+		"Demons",
+		"Stars",
+		"the Moon",
+		"Kings",
+		"Princes"
+	];
+	
+	//imagetext array
+	var imageText = [
+		"If there's one thing he can't stand, it's groveling",
+		"Don't blink...",
+		"Skewing the data on how many spiders someone eats in one's sleep since the dark ages",
+		"Never has a probably long since dead flaming ball of gas looked so pretty",
+		"Shouldn't have got that red ryder BB gun for christmas",
+		"Claims to be the king after some watery tart threw a sword at him",
+		"Doesn't like terrible news, so tell it to him in a good way"
+	]
+	
+	//function that forward one picture when the forward button is pressed, updates
+	//images, thumbnails, description and title
+	function forwardOnePic() {
+	
+		//associates variables with proper id's
+		var id = document.getElementById("MainPic");
+		var title = document.getElementById("titletext");
+		var descr = document.getElementById("descriptiontext");
+		var prev = document.getElementById("al" + arrayCount);
+		
+	
+		//increments array number variable
+		arrayCount = arrayCount+1;
+	
+		//if array count is over limit, loop back to first elements
+		if(arrayCount == 7)
+		{
+			arrayCount = 0;
+		}
+	
+		//initializing variable to modify next element
+		var next = document.getElementById("al" + arrayCount);
+		
+		//updates big image, image alt, title and description
+		id.src = imageURL[arrayCount];
+		id.alt = imageAlt[arrayCount];
+		title.placeholder = imageTitle[arrayCount];
+		descr.placeholder = imageText[arrayCount];
+	
+		//array updates opacity of thumbnail images
+		next.style.opacity = "1";
+		prev.style.opacity = "0.2";
+
+	}
+	
+	//function that goes backwards one picture when the back button is pressed, updates
+	//images, thumbnails, description and title
+	function backOnePic() {
+		var id = document.getElementById("MainPic");
+		var title = document.getElementById("titletext");
+		var descr = document.getElementById("descriptiontext");
+		var prev = document.getElementById("al" + arrayCount);
+	
+		//decrements array number variable
+		arrayCount = arrayCount-1;
+	
+		//if array count is over limit, loop back to first elements
+		if(arrayCount == -1)
+		{
+			arrayCount = 6;
+		}
+		
+		//initializing variable to modify next element
+		var next = document.getElementById("al" + arrayCount);
+	
+		//updates big image, image alt, title and description
+		id.src = imageURL[arrayCount];
+		id.alt = imageAlt[arrayCount];
+		title.placeholder = imageTitle[arrayCount];
+		descr.placeholder = imageText[arrayCount];
+	
+		//array updates opacity of thumbnail images
+		next.style.opacity = "1";
+		prev.style.opacity = "0.2";
+
+	}
+	
+</script>
+
+</head>
+
+<body>
+	<div id="container">
+
+		<div id="MainPicDiv">
+		
+			<img id="MainPic" src="http://farm2.staticflickr.com/1427/584157862_e67cac8eea.jpg" 
+			alt="god" width="200" height="200">
+			
+			<div id="Back"><button onClick="backOnePic();" style="width:62px; height:100px;">
+			<img src="http://iconizer.net/files/DefaultIcon_ver_0.11/orig/arrow-alt-left.png" 
+			alt="back" style="width:62px; height:100; margin-left:auto; margin-right:auto;"></button></div>
+			
+			<div id="Forward"><button onClick="forwardOnePic();" style="width:62px; height:100px;">
+			<img src="https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/256x256/arrow-alt-right.png"
+			alt="forward" style="width:62px; height:100; margin-left:auto; margin-right:auto;"></button></div>
+		
+		</div>
+		
+		<div id="MainTitle"><textarea id="titletext" placeholder="God" style="width:337px; height:18px;"></textarea></div>
+		
+		<div id="MainDescription"><textarea id="descriptiontext" 
+		placeholder="If there's one thing he can't stand, it's groveling" 
+		style="width:337px; height:44px;"></textarea></div>
+		
+		<div id="NavBar">
+			<div id="God"><img id="al0"  style="opacity:1;" 
+			src="http://farm2.staticflickr.com/1427/584157862_e67cac8eea.jpg" alt="god" width="45" height="45"></div>
+			
+			<div id="Angels"><img id="al1" style="opacity:.2;"  
+			src="http://www.flossiesgifts.com/v/vspfiles/photos/DMD-STK644741-doctor-who-12.jpg" alt="angels" width="45" height="45"></div>
+			
+			<div id="Demons"><img id="al2" style="opacity:.2;"  
+			src="https://s-media-cache-ak0.pinimg.com/236x/7d/1b/f6/7d1bf6f0b83823fdc0487b32021353a7.jpg" alt="demons" width="45" height="45"></div>
+			
+			<div id="Stars"><img id="al3" style="opacity:.2;"  
+			src="http://static.parade.com/wp-content/uploads/2014/03/Why-Do-Stars-All-Look-Almost-the-Same-Size-ftr.jpg" alt="stars" width="45" height="45"></div>
+			
+			<div id="Moon"><img id="al4" style="opacity:.2;"  
+			src="http://www.elcinedeloqueyotediga.net/wp-content/uploads/2009/07/ElcineenlasestrellasLunaViajealaLuna1.png" alt="moon" width="45" height="45"></div>
+			
+			<div id="Kings"><img id="al5" style="opacity:.2;" 
+			src="http://static.tvtropes.org/pmwiki/pub/images/King-Arthur-and-Patsy-monty-python-380178_800_441_4926.jpg" alt="kings" width="45" height="45"></div>
+			
+			<div id="Princes"><img id="al6" style="opacity:.2;" 
+			src="https://i.pinimg.com/originals/6b/ce/34/6bce346f9fdc983e9887bbb27099bc67.jpg" alt="princes" width="45" height="45"></div>
+		</div>
+		
+	</div>
+</body>
+
+</html>
